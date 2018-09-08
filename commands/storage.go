@@ -19,18 +19,16 @@ func NewKVStorage(filename string) (*KVStorage, error) {
 	values := make(map[string]string)
 
 	content, err := ioutil.ReadFile(filename)
-	if err != nil {
-		return nil, err
-	}
-	for _, line := range strings.Split(string(content), "\n") {
-		trimmed := strings.TrimSpace(line)
-		if strings.HasPrefix(trimmed, "#") || len(trimmed) == 0 {
-			continue
+	if err == nil {
+		for _, line := range strings.Split(string(content), "\n") {
+			trimmed := strings.TrimSpace(line)
+			if strings.HasPrefix(trimmed, "#") || len(trimmed) == 0 {
+				continue
+			}
+			kv := strings.SplitN(line, "=", 2)
+			values[kv[0]] = kv[1]
 		}
-		kv := strings.SplitN(line, "=", 2)
-		values[kv[0]] = kv[1]
 	}
-
 	return &KVStorage{
 		values:   values,
 		filename: filename,

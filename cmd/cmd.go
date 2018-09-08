@@ -22,7 +22,7 @@ var (
 var RootCmd = &cobra.Command{
 	Use:   "gotoma",
 	Short: "EthBerlin tomahawk!",
-	Long:  "IPFS pinning consortium",
+	Long:  "EthBerlin tomahawk!",
 	Run: func(cmd *cobra.Command, args []string) {
 		_ = cmd.Help()
 	},

@@ -1,12 +1,10 @@
-from golang:onbuild
+FROM golang:alpine
+RUN apk update && apk upgrade && \
+    apk add --no-cache bash git openssh build-base
 
-RUN mkdir /app
-ADD . /app/
-WORKDIR /app
-RUN go build -o main .
-
-#WORKDIR /root/go/src/github.com/TomahawkEthBerlin/gotoma
-#COPY * /root/go/src/github.com/TomahawkEthBerlin/gotoma/
-
-
-ENTRYPOINT /app/main
+RUN mkdir -p /go/src/github.com/TomahawkEthBerlin/gotoma 
+ADD . /go/src/github.com/TomahawkEthBerlin/gotoma/
+WORKDIR /go/src/github.com/TomahawkEthBerlin/gotoma 
+RUN go get
+RUN go build -o /gotoma .
+ENTRYPOINT ["./gotoma","serve"]

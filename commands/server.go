@@ -19,7 +19,7 @@ import (
 
 const (
 	kEthereum       = "ethereum"
-	kServerHost     = "my.tomahawk.dnp.dappnode.eth:8080"
+	kServerHost     = "my.gotoma.dnp.adriamb.eth:8080"
 	kSendMessageUrl = "my.telegrambot.dnp.dappnode.eth"
 )
 

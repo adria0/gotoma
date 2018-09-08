@@ -41,7 +41,7 @@ function save() {
         success: function(data){
 			alert("Saved. Must reload service.")
         },
-            failure: function(errMsg) {
+        failure: function(errMsg) {
             alert(errMsg);
         }
     });

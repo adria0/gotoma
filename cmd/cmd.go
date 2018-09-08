@@ -59,6 +59,8 @@ func init() {
 // initConfig reads in config file and ENV variables if set.
 func initConfig() {
 
+	cfg.Valid = false
+
 	if logLevel, err := log.ParseLevel(verbose); err == nil {
 		log.SetLevel(logLevel)
 	} else {
@@ -77,13 +79,14 @@ func initConfig() {
 	}
 
 	if err := viper.ReadInConfig(); err != nil {
-		panic(err)
+		log.Error(err)
+	} else {
+		log.WithField("file", viper.ConfigFileUsed()).Debug("Using config file")
+
+		if err := viper.Unmarshal(&cfg.C); err != nil {
+			log.Error(err)
+		} else {
+			cfg.Valid = true
+		}
 	}
-
-	log.WithField("file", viper.ConfigFileUsed()).Debug("Using config file")
-
-	if err := viper.Unmarshal(&cfg.C); err != nil {
-		panic(err)
-	}
-
 }

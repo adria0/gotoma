@@ -26,6 +26,8 @@ type ScanEventDispatcher struct {
 
 	client *ethclient.Client
 
+	netid string
+
 	eventHandler EventHandlerFunc
 	savepoint    SavePoint
 
@@ -39,9 +41,10 @@ type ScanEventDispatcher struct {
 	nextTxIndex uint
 }
 
-func NewScanEventDispatcher(client *ethclient.Client, handler EventHandlerFunc, savepoint SavePoint) *ScanEventDispatcher {
+func NewScanEventDispatcher(client *ethclient.Client, handler EventHandlerFunc, savepoint SavePoint, netid string) *ScanEventDispatcher {
 
 	return &ScanEventDispatcher{
+		netid:        netid,
 		client:       client,
 		savepoint:    savepoint,
 		eventHandler: handler,
@@ -68,6 +71,7 @@ func (e *ScanEventDispatcher) process() (bool, error) {
 
 	log.WithFields(log.Fields{
 		"block/tx": fmt.Sprintf("%v/%v", e.nextBlock, e.nextTxIndex),
+		"netid":    e.netid,
 	}).Debug("EVENT scanning")
 
 	// Check if e.block is valid, if not download it.
@@ -84,6 +88,7 @@ func (e *ScanEventDispatcher) process() (bool, error) {
 
 		log.WithFields(log.Fields{
 			"block": fmt.Sprintf("%v", e.nextBlock),
+			"netid": e.netid,
 		}).Info("EVENT processing block")
 
 		// Download all receipts, in parallel
@@ -146,7 +151,7 @@ func (e *ScanEventDispatcher) Start() {
 			default:
 				wait, err := e.process()
 				if err != nil {
-					log.Error("EVENT Failed ", err)
+					log.Error("EVENT Failed ", err, " netid=", e.netid)
 					loop = false
 				} else if wait {
 					time.Sleep(4 * time.Second)

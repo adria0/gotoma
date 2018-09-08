@@ -7,4 +7,4 @@ ADD . /go/src/github.com/TomahawkEthBerlin/gotoma/
 WORKDIR /go/src/github.com/TomahawkEthBerlin/gotoma 
 RUN go get
 RUN go build -o /gotoma .
-ENTRYPOINT ["./gotoma","serve"]
+ENTRYPOINT ["/gotoma","serve"]

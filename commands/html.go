@@ -83,7 +83,7 @@ func htmlTx(tx *types.Transaction, receipt *types.Receipt) string {
 		cell("To", tx.To().Hex())
 	}
 	cell("Value", tx.Value().String())
-	cell("GasPrice", "tx.GasPrice().String()")
+	cell("GasPrice", tx.GasPrice().String())
 	cell("GasLimit", tx.GasPrice().String())
 	cell("Nonce", tx.Nonce())
 	cell("Data", hex.EncodeToString(tx.Data()))

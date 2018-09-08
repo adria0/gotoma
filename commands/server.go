@@ -19,7 +19,7 @@ import (
 
 const (
 	kEthereum       = "ethereum"
-	kServerHost     = "my.tomahawk.dnp.dappnode.eth"
+	kServerHost     = "my.tomahawk.dnp.dappnode.eth:8080"
 	kSendMessageUrl = "my.telegrambot.dnp.dappnode.eth"
 )
 
@@ -108,7 +108,7 @@ func Serve(cmd *cobra.Command, args []string) {
 			netid := c.Param("netid")
 			txid := c.Param("txid")
 
-			c.String(http.StatusOK, networks[netid].TxInfo(txid))
+			c.Data(http.StatusOK, "text/html", []byte(networks[netid].TxInfo(txid)))
 		})
 	}
 

@@ -172,18 +172,7 @@ func (s *EthNetwork) TxInfo(txid string) string {
 		return fmt.Sprintf("error retriving receipt: %v", err)
 	}
 
-	var b bytes.Buffer
-
-	if receipt.Status == types.ReceiptStatusSuccessful {
-		b.WriteString(fmt.Sprintf("Status: SUCCESS"))
-	} else {
-		b.WriteString(fmt.Sprintf("Status: FAILED"))
-	}
-	b.WriteString(tx.String() + "\n")
-	b.WriteString(fmt.Sprintf("GasUsed: %v\n", receipt.GasUsed))
-	b.WriteString(fmt.Sprintf("CumulativeGasUsed: %v", receipt.CumulativeGasUsed))
-
-	return b.String()
+	return htmlTx(tx, receipt)
 }
 
 type Network interface {

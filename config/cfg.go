@@ -22,6 +22,10 @@ type Config struct {
 		Rule    string
 		Message string
 	}
+
+	Notifications struct {
+		TelegramUsername string
+	}
 }
 
 var Default = `
@@ -46,6 +50,10 @@ alerts:
     #    network : ethmain
     #    rule: (log_0x7d1335Af903ff256823c9AA2d4a5aaA41E054335_0x6e812926864597b1b871e35c4b24bd297ec1e96c871c41b9d7d3deb47bbe751c =~ '0xf7d8c883')
     #    message: createSiringAuction called with gas {{ .gasprice }}
+
+#notifications:
+#	telegramusername: adriamb
+
 `
 
 func Get() string {

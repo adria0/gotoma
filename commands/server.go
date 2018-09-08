@@ -2,7 +2,9 @@ package commands
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"sync"
 	"text/template"
@@ -18,7 +20,7 @@ import (
 const (
 	kEthereum       = "ethereum"
 	kServerHost     = "my.tomahawk.dnp.dappnode.eth"
-	kSendMessageUrl = ""
+	kSendMessageUrl = "my.telegrambot.dnp.dappnode.eth"
 )
 
 func assert(err error) {
@@ -27,46 +29,56 @@ func assert(err error) {
 	}
 }
 
-type logentry struct {
-	netid   string
-	alert   string
-	message string
-	tx      *types.Transaction
-	r       *types.Receipt
-}
-
-func (l *logentry) MsgString() string {
-	var b bytes.Buffer
-	b.WriteString(fmt.Sprintf("alert: %v ", l.alert))
-	b.WriteString(fmt.Sprintf("%v ", l.message))
-	b.WriteString(fmt.Sprintf("http://" + kServerHost + "/b/" + l.netid + "/tx/" + l.tx.Hash().Hex()))
-
-	return b.String()
-}
-
-func (l *logentry) LogString() string {
-	var b bytes.Buffer
-	b.WriteString(fmt.Sprintf("alert: %v\n", l.alert))
-	b.WriteString(fmt.Sprintf("message: %v\n", l.message))
-	b.WriteString(fmt.Sprintf("%v", l.tx.String()))
-
-	return b.String()
-}
-
 var mutex sync.Mutex
 var logtext string
+
+func sendNotification(msg string) error {
+
+	url := "http://" + kSendMessageUrl
+
+	params := make(map[string]string)
+	params["username"] = cfg.C.Notifications.TelegramUsername
+	params["message"] = msg
+	paramBytes, err := json.Marshal(params)
+	if err != nil {
+		return err
+	}
+
+	req, err := http.NewRequest("POST", url, bytes.NewReader(paramBytes))
+	req.Header.Set("Content-Type", "application/json")
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+	_, err = ioutil.ReadAll(resp.Body)
+	return err
+}
 
 func onLog(netid, alert, message string, tx *types.Transaction, r *types.Receipt) {
 	mutex.Lock()
 	defer mutex.Unlock()
 
-	text := txText(tx, r)
+	text := htmlTx(tx, r)
 	if len(logtext) > 8192 {
 		logtext = text + "<hr>" + logtext[:8192-len(text)]
 	} else {
 		logtext = text + "<hr>" + logtext
 	}
 
+	var msg bytes.Buffer
+	msg.WriteString(fmt.Sprintf("alert: %v ", alert))
+	msg.WriteString(fmt.Sprintf("%v ", message))
+	msg.WriteString(fmt.Sprintf("http://" + kServerHost + "/b/" + netid + "/tx/" + tx.Hash().Hex()))
+
+	go func() {
+		err := sendNotification(msg.String())
+		if err != nil {
+			log.Error(err)
+		}
+	}()
 }
 
 func Serve(cmd *cobra.Command, args []string) {

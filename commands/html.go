@@ -58,7 +58,7 @@ function save() {
 </html>
 `
 
-func txText(tx *types.Transaction, receipt *types.Receipt) string {
+func htmlTx(tx *types.Transaction, receipt *types.Receipt) string {
 	var b bytes.Buffer
 
 	cell := func(k string, v interface{}) {

@@ -14,7 +14,6 @@ accounts:
         network : ethmain
 
 alerts:
-
     createSiringAuction:
         network : ethmain
         rule: (to == '0x06012c8cf97bead5deae237070f9587f8e7a266d' && data =~ '0xf7d8c883')
@@ -25,3 +24,5 @@ alerts:
         rule: (log_0x7d1335Af903ff256823c9AA2d4a5aaA41E054335_0x6e812926864597b1b871e35c4b24bd297ec1e96c871c41b9d7d3deb47bbe751c =~ '0xf7d8c883')
         message: createSiringAuction called with gas {{ .gasprice }}
 
+notifications:
+    telegramusername: adriamb

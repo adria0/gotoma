@@ -1,5 +1,3 @@
-# gotoma!
-
 [![](README.md.images/gotomabanner_small.png)]()
 
 ## Inspiration

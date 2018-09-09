@@ -1,0 +1,5 @@
+version: '3.4'
+services:
+    gotoma.dnp.adriamb.eth:
+        image: 'gotoma.dnp.adriamb.eth:0.0.1'
+        build: ./build

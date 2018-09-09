@@ -9,7 +9,7 @@ import (
 	"sync"
 	"text/template"
 
-	cfg "github.com/TomahawkEthBerlin/gotoma/config"
+	cfg "github.com/adriamb/gotoma/config"
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cobra"

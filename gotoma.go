@@ -2,7 +2,7 @@ package main
 
 import (
 	banner "github.com/CrowdSurge/banner"
-	cmd "github.com/TomahawkEthBerlin/gotoma/cmd"
+	cmd "github.com/adriamb/gotoma/cmd"
 )
 
 func main() {

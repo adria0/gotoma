@@ -1,4 +1,4 @@
-module github.com/TomahawkEthBerlin/gotoma
+module github.com/adriamb/gotoma
 
 require (
 	github.com/CrowdSurge/banner v0.0.0-20140923200336-8c0e79dc5ff7

@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	cmd "github.com/TomahawkEthBerlin/gotoma/commands"
-	cfg "github.com/TomahawkEthBerlin/gotoma/config"
+	cmd "github.com/adriamb/gotoma/commands"
+	cfg "github.com/adriamb/gotoma/config"
 
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"

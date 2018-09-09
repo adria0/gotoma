@@ -1,0 +1,21 @@
+{
+  "name": "gotoma.dnp.adriamb.eth",
+  "version": "0.0.1",
+  "description": "Tomahawk!",
+  "avatar": "",
+  "type": "service",
+  "image": {
+    "path": "",
+    "hash": "",
+    "size": "",
+    "restart": "always",
+    "volumes": [
+      "gotoma:/app"
+    ]
+  },
+  "author": "Adria",
+  "license": "",
+  "homepage": {
+    "homepage": "http://my.gotoma.dnp.adriamb.eth:8080"
+  }
+}

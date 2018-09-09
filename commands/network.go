@@ -11,8 +11,8 @@ import (
 	"strings"
 
 	"github.com/Knetic/govaluate"
-	cfg "github.com/TomahawkEthBerlin/gotoma/config"
-	"github.com/TomahawkEthBerlin/gotoma/eth"
+	cfg "github.com/adriamb/gotoma/config"
+	"github.com/adriamb/gotoma/eth"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
 	ethclient "github.com/ethereum/go-ethereum/ethclient"

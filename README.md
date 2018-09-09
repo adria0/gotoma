@@ -1,6 +1,6 @@
 # gotoma!
 
-[![](README.md.files/gotomabanner_small.png)]()
+[![](README.md.images/gotomabanner_small.png)]()
 
 ## Inspiration
 
